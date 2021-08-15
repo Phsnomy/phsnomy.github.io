@@ -32,6 +32,7 @@ window.onload = () => {
     document.getElementById("host").innerText=host
     document.getElementById("ping").style.color = "yellow"
     document.getElementById("ping").innerText="Testing..."
+    document.getElementById("status").innerText = "正在等待響應..."
     var request = new XMLHttpRequest()
     request.addEventListener("loadend",()=>{
         if(request.status==200){
@@ -41,6 +42,7 @@ window.onload = () => {
             current = dir
             updatedir()
             highlightcount()
+            document.getElementById("status").innerText = "就緒."
         }
         else{
             document.getElementById("ping").style.color = "red"
@@ -100,6 +102,7 @@ function right(){
 }
 
 function changedir(str){
+    document.getElementById("status").innerText = "正在等待響應..."
     cancount = 1
     displayingfile = 0
     var request = new XMLHttpRequest()
@@ -117,6 +120,7 @@ function changedir(str){
     request1.addEventListener("loadend",()=>{
         if(request1.status==200){
             document.getElementById("content").innerText = request1.responseText
+            document.getElementById("status").innerText = "就緒."
         }
     })
     request1.open("GET",host+"/"+str+"/index")
@@ -138,11 +142,13 @@ function highlightcount(){
 }
 
 function displayfile(){
+    document.getElementById("status").innerText = "正在等待響應..."
     var str = current.files[cancount-2-current.subdir.length][1]
     var request1 = new XMLHttpRequest()
     request1.addEventListener("loadend",()=>{
         if(request1.status==200){
             document.getElementById("content").innerText = request1.responseText
+            document.getElementById("status").innerText = "就緒."
         }
     })
     request1.open("GET",host+"/"+str)
