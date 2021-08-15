@@ -10,7 +10,7 @@ function adjustbody(){
         )
 }
 
-var host = "http://127.0.0.1:5500"
+var host = "https://phsnomy.github.io"
 var current
 var displayingfile = 0
 var cancount = 1;
