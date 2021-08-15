@@ -1,0 +1,8 @@
+{
+    "pardir":["無","public"],
+    "name": ["根目錄","public"],
+    "subdir": [["評論", "public/comments"],
+    ["閣樓", "public/archives"],
+    ["留言簿", "public/guestbook"]],
+    "files":[["關於", "public/about"]]
+}

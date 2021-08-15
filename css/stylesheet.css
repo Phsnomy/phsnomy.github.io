@@ -1,0 +1,60 @@
+:root{
+    --border-width: 2px;
+}
+
+@font-face {
+    font-family: 'cwTeXMing';
+    src: url('/fonts/cwTeXMing.ttf.woff');
+}
+
+@font-face {
+    font-family: 'Hack';
+    src: url('/fonts/hack-regular.woff2');
+}
+
+body{
+    font-family: 'Hack';
+    background-color: black;
+    color: white;
+    border: var(--border-width) solid white;
+}
+
+whitebox-block{
+    border: var(--border-width) solid white;
+    display: block;
+    padding: 0;
+    margin: 0;
+}
+
+whitebox-flex{
+    border: var(--border-width) solid white;
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+
+parbar{
+    display: block;
+    text-align: left;
+}
+
+selfbar{
+    display: block;
+    text-align: center;
+}
+
+subbar{
+    display: block;
+    text-align: right;
+}
+
+c{
+    font-family: 'cwTeXMing';
+}
+
+#status{
+    text-align: justify;
+}
+#buffer{
+    text-align: justify;
+}
