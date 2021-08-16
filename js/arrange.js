@@ -9,6 +9,7 @@ function adjustbody(){
         document.getElementById("bottombar").offsetHeight - 2 * borderWidth + 'px' 
         )
     document.getElementById("content").style.height = document.getElementById("mainframe").clientHeight - document.getElementById("topbar").offsetHeight + 'px'
+    document.getElementById("content").style.width = document.getElementById("content").offsetWidth + 'px'
 }
 
 //var host = 'http://127.0.0.1:5500' // 
@@ -53,14 +54,7 @@ window.onload = () => {
     })
     request.open("GET",host+"/public/dirinfo.json")
     request.send()
-    var request1 = new XMLHttpRequest()
-    request1.addEventListener("loadend",()=>{
-        if(request1.status==200){
-            document.getElementById("content").innerText = request1.responseText
-        }
-    })
-    request1.open("GET",host+"/public/index")
-    request1.send()
+    getcontent(host+"/public/index" ,"content")
 }
 
 function updatedir(){
@@ -68,7 +62,7 @@ function updatedir(){
     var navhtml = "";
     navhtml = navhtml + `<parbar id=nav${count}>< ${current.pardir[0]}[d]</parbar>`;
     count ++;
-    navhtml = navhtml + `<selfbar id=nav${count}>${current.name[0]}[d]</selfbar>`;
+    navhtml = navhtml + `<selfbar id=nav${count}>- ${current.name[0]}[d] -</selfbar>`;
     count ++;
     current.subdir.forEach(element => {
         navhtml = navhtml + `<subbar id=nav${count}>${element[0]}[d] ></subbar>`;
@@ -101,6 +95,7 @@ function left(){
     else {
         displayingfile=0
         changefocus()
+        displayindex()
     }
 }
 
@@ -114,8 +109,15 @@ function right(){
     }
 }
 
+function checkmacro(){
+    var str = document.getElementById("content").innerHTML
+    str = str.replaceAll("MACRO-C-START","<c>")
+    str = str.replaceAll("MACRO-C-END","</c>")
+    str = str.replaceAll(" ","&nbsp;")
+    document.getElementById("content").innerHTML = str
+}
+
 function changedir(str){
-    document.getElementById("status").innerText = "正在等待響應..."
     cancount = 1
     displayingfile = 0
     var request = new XMLHttpRequest()
@@ -129,15 +131,33 @@ function changedir(str){
     })
     request.open("GET",host+"/"+str+"/dirinfo.json")
     request.send()
+    getcontent(host+"/"+str+"/index","content")
+}
+
+function getcontent(path, component){
     var request1 = new XMLHttpRequest()
+    document.getElementById("status").innerHTML = 
+        '<span style="color: yellow">正在等待響應...</span>'
     request1.addEventListener("loadend",()=>{
         if(request1.status==200){
-            document.getElementById("content").innerText = request1.responseText
-            document.getElementById("status").innerText = "就緒."
+            var text = request1.responseText
+            document.getElementById(component).innerText = text
+            checkmacro()
+            document.getElementById("status").innerHTML = 
+                '<span style="color: lawngreen">[200]就绪.</span>'
+        } else{
+            document.getElementById("status").innerHTML = 
+                `<span style="color: red">[${request1.status}]错误.</span>`
+            document.getElementById(component).innerText = 
+                `很不幸, 錯誤時有發生. 這一問題有可能出現在遠端或終端.\n雖然實際上的責任全在與作者沒有實現基本的錯誤處理.\n請鍵入[h]返回N.S.\n\n+- End -+\nPhsnomy.\n概驗式.`
         }
     })
-    request1.open("GET",host+"/"+str+"/index")
+    request1.open("GET",path)
     request1.send()
+}
+
+function displayindex(){
+    getcontent(host+"/"+current.name[1]+"/index","content")
 }
 
 function highlightcount(){
@@ -155,18 +175,9 @@ function highlightcount(){
 }
 
 function displayfile(){
-    document.getElementById("status").innerText = "正在等待響應..."
     var str = current.files[cancount-2-current.subdir.length][1]
-    var request1 = new XMLHttpRequest()
-    request1.addEventListener("loadend",()=>{
-        if(request1.status==200){
-            document.getElementById("content").innerText = request1.responseText
-            document.getElementById("status").innerText = "就緒."
-            changefocus()
-        }
-    })
-    request1.open("GET",host+"/"+str)
-    request1.send()
+    getcontent(host+"/"+str,"content")
+    changefocus()
     displayingfile = 1
 }
 
@@ -194,16 +205,10 @@ function focusnavforce(){
 }
 
 function scrolldownfile(){
-    if (document.getElementById("content").scrollTop>document.getElementById("content").scrollHeight){
-        document.getElementById("content").scrollTop=document.getElementById("content").scrollHeight
-    }
-    else {document.getElementById("content").scrollTop = document.getElementById("content").scrollTop + document.getElementById("topbar").offsetHeight}
+    document.getElementById("content").scrollTop = document.getElementById("content").scrollTop + document.getElementById("topbar").offsetHeight
 }
 function scrollupfile(){
-    if (document.getElementById("content").scrollTop<0){
-        document.getElementById("content").scrollTop=0
-    }
-    else {document.getElementById("content").scrollTop = document.getElementById("content").scrollTop - document.getElementById("topbar").offsetHeight}
+    document.getElementById("content").scrollTop = document.getElementById("content").scrollTop - document.getElementById("topbar").offsetHeight
 }
 // 邏輯:
 // changedir(dir) -> 變更路徑

@@ -60,9 +60,16 @@ c{
 }
 
 #content, #outline{
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-wrap: break-word;
 }
 
 ::-webkit-scrollbar{
     display: none;
+}
+
+.whiteline{
+    display: block;
+    background-color: white;
+    height: 2px;
 }

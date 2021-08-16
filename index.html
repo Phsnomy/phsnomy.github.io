@@ -12,18 +12,18 @@
         <div style="display: flex; flex-direction: row; height: 100%;">
             <whitebox-block style="width: 20%; height: 100%;">
                 <div style="text-align: center;" id="nav-ind">Navigation</div>
-                <hr style="width: 100%; margin: 0; padding: 0;">
-                <div id="outline"></div>
+                <div class="whiteline" style="width: 100%; margin: 0; padding: 0;"></div>
+                <div id="outline" style="width: 100%; height: 100%;"></div>
             </whitebox-block>
             <whitebox-block style="width: 80%; height: 100%;">
                 <div style="text-align: center;" id="con-ind">Content</div>
-                <hr style="width: 100%; margin: 0; padding: 0;">
-                <div id="content"></div>
+                <div class="whiteline" style="width: 100%; margin: 0; padding: 0;"></div>
+                <div id="content" style="width: 100%; height: 100%;"></div>
             </whitebox-block>
         </div>
     </whitebox-block>
     <whitebox-block id="bottombar">
         Buffer: <span id="buffer">_</span>
-        Status: <span id="status">就緒.</span>
+        Status: <span id="status"><span style="color: yellow">正在等待响应...</span></span>
     </whitebox-block>
 </body>
