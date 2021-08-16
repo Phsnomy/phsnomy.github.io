@@ -11,8 +11,8 @@ function adjustbody(){
     document.getElementById("content").style.height = document.getElementById("mainframe").clientHeight - document.getElementById("topbar").offsetHeight + 'px'
 }
 
-var host = 'http://127.0.0.1:5500' // 
-//var host = "https://phsnomy.github.io" //
+//var host = 'http://127.0.0.1:5500' // 
+var host = "https://phsnomy.github.io" //
 var current
 var displayingfile = 0
 var cancount = 1;
