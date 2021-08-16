@@ -58,3 +58,11 @@ c{
 #buffer{
     text-align: justify;
 }
+
+#content, #outline{
+    overflow: scroll;
+}
+
+::-webkit-scrollbar{
+    display: none;
+}

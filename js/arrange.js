@@ -8,9 +8,11 @@ function adjustbody(){
         document.getElementById("topbar").offsetHeight -
         document.getElementById("bottombar").offsetHeight - 2 * borderWidth + 'px' 
         )
+    document.getElementById("content").style.height = document.getElementById("mainframe").clientHeight - document.getElementById("topbar").offsetHeight + 'px'
 }
 
-var host = "https://phsnomy.github.io"
+var host = 'http://127.0.0.1:5500' // 
+//var host = "https://phsnomy.github.io" //
 var current
 var displayingfile = 0
 var cancount = 1;
@@ -77,24 +79,35 @@ function updatedir(){
         count ++
     })
     document.getElementById("outline").innerHTML=navhtml
+    focusnavforce()
 }
 
 function up(){
-    if (cancount-- < 2){cancount=current.subdir.length+current.files.length+1}
+    if (displayingfile==1){
+        scrollupfile()
+    }
+    else if (cancount-- < 2){cancount=current.subdir.length+current.files.length+1}
     highlightcount()
 }
 function down(){
-    if (cancount++ > current.subdir.length+current.files.length){cancount=1}
+    if (displayingfile==1){
+        scrolldownfile()
+    }
+    else if (cancount++ > current.subdir.length+current.files.length){cancount=1}
     highlightcount()
 }
 function left(){
     if (displayingfile==0) {changedir(current.pardir[1])}
-    else {changedir(current.name[1])}
+    else {
+        displayingfile=0
+        changefocus()
+    }
 }
+
 function right(){
     if (cancount == 1){}
     else if (cancount > current.subdir.length+1){
-        displayfile()
+        if(displayingfile==0) displayfile()
     }
     else{
         changedir(current.subdir[cancount-2][1])
@@ -149,11 +162,48 @@ function displayfile(){
         if(request1.status==200){
             document.getElementById("content").innerText = request1.responseText
             document.getElementById("status").innerText = "就緒."
+            changefocus()
         }
     })
     request1.open("GET",host+"/"+str)
     request1.send()
     displayingfile = 1
+}
+
+function changefocus(){
+    var nav = document.getElementById("nav-ind").style
+    var con = document.getElementById("con-ind").style
+    if (nav.color == "black"){
+        nav.color = "white"; con.color = "black"
+        nav.backgroundColor = "black"; con.backgroundColor = "white"
+    }
+    else if(con.color == "black"){
+        con.color = "white"; nav.color = "black"
+        con.backgroundColor = "black"; nav.backgroundColor = "white"
+    }
+    else {
+        nav.color = "black"
+        nav.backgroundColor = "white"
+    }
+}
+
+function focusnavforce(){
+    var nav = document.getElementById("nav-ind").style
+    nav.color = "black"
+    nav.backgroundColor = "white"
+}
+
+function scrolldownfile(){
+    if (document.getElementById("content").scrollTop>document.getElementById("content").scrollHeight){
+        document.getElementById("content").scrollTop=document.getElementById("content").scrollHeight
+    }
+    else {document.getElementById("content").scrollTop = document.getElementById("content").scrollTop + document.getElementById("topbar").offsetHeight}
+}
+function scrollupfile(){
+    if (document.getElementById("content").scrollTop<0){
+        document.getElementById("content").scrollTop=0
+    }
+    else {document.getElementById("content").scrollTop = document.getElementById("content").scrollTop - document.getElementById("topbar").offsetHeight}
 }
 // 邏輯:
 // changedir(dir) -> 變更路徑
