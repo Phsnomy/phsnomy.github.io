@@ -23,6 +23,8 @@ function recread(str, par1, par2, name){
     })
     fs.writeFileSync(str+'dirinfo.json', JSON.stringify(dirinfo))
 }
+recread('public', "無", "public", "根目錄")
+/*
 fs.readdirSync('public').forEach((item, index)=>{
     var item_n
     if(fs.lstatSync("public/" + item).isDirectory()){
@@ -32,3 +34,4 @@ fs.readdirSync('public').forEach((item, index)=>{
         recread('public/'+item, "根目錄","public", item_n)
     }
 })
+*/

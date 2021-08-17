@@ -13,7 +13,8 @@ function adjustbody(){
 }
 
 //var host = 'http://127.0.0.1:5500' // 
-var host = "https://phsnomy.github.io" //
+//var host = "https://phsnomy.github.io" //
+var host = "http://10.20.193.16:5500" //
 var current
 var displayingfile = 0
 var cancount = 1;
@@ -138,13 +139,16 @@ function getcontent(path, component){
     var request1 = new XMLHttpRequest()
     document.getElementById("status").innerHTML = 
         '<span style="color: yellow">正在等待響應...</span>'
+        document.getElementById("size").innerHTML = '----'
     request1.addEventListener("loadend",()=>{
         if(request1.status==200){
             var text = request1.responseText
             document.getElementById(component).innerText = text
             checkmacro()
+            var btext = new Blob([text])
             document.getElementById("status").innerHTML = 
                 '<span style="color: lawngreen">[200]就绪.</span>'
+            document.getElementById("size").innerHTML = ((btext.size/1024)+"").slice(0,4)
         } else{
             document.getElementById("status").innerHTML = 
                 `<span style="color: red">[${request1.status}]错误.</span>`
