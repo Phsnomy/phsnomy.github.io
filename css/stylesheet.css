@@ -73,3 +73,19 @@ c{
     background-color: white;
     height: 2px;
 }
+
+#bottombar{
+    display: flex;
+    align-items: center;
+}
+
+#bottombar-center{
+    line-height: 100%;
+}
+
+#ANSA{
+    display: none;
+    position: absolute;
+    left: 20%;
+    top: 80%;
+}

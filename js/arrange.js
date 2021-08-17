@@ -1,6 +1,9 @@
 function adjustbody(){
     document.body.style.width = window.innerWidth * 0.9 + 'px'
     document.body.style.height = window.innerHeight * 0.9 + 'px'
+    document.getElementById("ANSA").style.fontSize = window.innerHeight*0.04+'px'
+    document.getElementById("bottombar").style.height =
+        document.getElementById("topbar").offsetHeight + 'px'
     var borderWidth = (document.body.offsetHeight - document.body.clientHeight)/2
     document.getElementById("buffer").innerText = '_'
     document.getElementById("mainframe").style.height=(
@@ -18,6 +21,7 @@ var host = "https://phsnomy.github.io" //
 var current
 var displayingfile = 0
 var cancount = 1;
+var showkeys = 0;
 
 window.addEventListener("keydown",(event)=>{
     if (event.key.length == 1){
@@ -56,6 +60,16 @@ window.onload = () => {
     request.open("GET",host+"/public/dirinfo.json")
     request.send()
     getcontent(host+"/public/index" ,"content")
+    var ANSon = 0;
+    document.getElementById("ANS").onclick = () => {
+        if (ANSon == 1) {
+            document.getElementById("ANSA").style.display = "none"
+            ANSon = 0;
+        } else {
+            document.getElementById("ANSA").style.display = "block"
+            ANSon = 1;
+        }
+    }
 }
 
 function updatedir(){
@@ -137,17 +151,17 @@ function changedir(str){
 
 function getcontent(path, component){
     var request1 = new XMLHttpRequest()
-    document.getElementById("status").innerHTML = 
-        '<span style="color: yellow">正在等待響應...</span>'
-        document.getElementById("size").innerHTML = '----'
+    document.getElementById("status").innerHTML = '正在等待響應...'
+    document.getElementById("status").style.color = 'yellow'
+    document.getElementById("size").innerHTML = '----'
     request1.addEventListener("loadend",()=>{
         if(request1.status==200){
             var text = request1.responseText
             document.getElementById(component).innerText = text
             checkmacro()
             var btext = new Blob([text])
-            document.getElementById("status").innerHTML = 
-                '<span style="color: lawngreen">[200]就绪.</span>'
+            document.getElementById("status").innerHTML = '[200]就绪.'
+            document.getElementById("status").style.color = 'lawngreen'
             document.getElementById("size").innerHTML = ((btext.size/1024)+"").slice(0,4)
         } else{
             document.getElementById("status").innerHTML = 
@@ -214,6 +228,7 @@ function scrolldownfile(){
 function scrollupfile(){
     document.getElementById("content").scrollTop = document.getElementById("content").scrollTop - document.getElementById("topbar").offsetHeight
 }
+
 // 邏輯:
 // changedir(dir) -> 變更路徑
 // displayfile() -> 顯示文件
