@@ -16,8 +16,8 @@ function adjustbody(){
     document.getElementById("content").style.width = document.getElementById("content").offsetWidth + 'px'
 }
 
-var host = 'http://127.0.0.1:5500' // 
-//var host = "https://phsnomy.github.io" //
+//var host = 'http://127.0.0.1:5500' // 
+var host = "https://phsnomy.github.io" //
 //var host = "http://10.20.193.16:5500" //
 var current
 var displayingfile = 0
