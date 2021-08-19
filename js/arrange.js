@@ -17,6 +17,7 @@ function adjustbody(){
 }
 
 var host = document.location.href
+/* FIX IT! */
 //var host = 'http://127.0.0.1:5500' // 
 //var host = "https://phsnomy.github.io" //
 //var host = "http://10.20.193.16:5500" //
