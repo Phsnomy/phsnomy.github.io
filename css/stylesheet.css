@@ -59,6 +59,10 @@ c{
     text-align: justify;
 }
 
+#outline{
+    height: 100%;
+}
+
 #content, #outline{
     overflow-y: scroll;
     overflow-wrap: break-word;
@@ -88,4 +92,7 @@ c{
     position: absolute;
     left: 20%;
     top: 80%;
+}
+
+#nav{
 }

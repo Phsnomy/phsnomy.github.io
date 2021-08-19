@@ -12,28 +12,17 @@ function adjustbody(){
         document.getElementById("bottombar").offsetHeight - 2 * borderWidth + 'px' 
         )
     document.getElementById("content").style.height = document.getElementById("mainframe").clientHeight - document.getElementById("topbar").offsetHeight + 'px'
+    document.getElementById("outline").style.height = document.getElementById("mainframe").clientHeight - document.getElementById("topbar").offsetHeight + 'px'
     document.getElementById("content").style.width = document.getElementById("content").offsetWidth + 'px'
 }
 
-//var host = 'http://127.0.0.1:5500' // 
-var host = "https://phsnomy.github.io" //
+var host = 'http://127.0.0.1:5500' // 
+//var host = "https://phsnomy.github.io" //
 //var host = "http://10.20.193.16:5500" //
 var current
 var displayingfile = 0
 var cancount = 1;
 var showkeys = 0;
-
-window.addEventListener("keydown",(event)=>{
-    if (event.key.length == 1){
-        document.getElementById("buffer").innerText = event.key
-    setTimeout(()=>{
-        document.getElementById("buffer").innerText = '_'
-    },100)}
-    if (event.key == 'h') left()
-    else if (event.key == "j") down()
-    else if (event.key == "k") up()
-    else if (event.key == "l") right()
-})
 
 window.onload = () => {
     adjustbody()
@@ -70,21 +59,32 @@ window.onload = () => {
             ANSon = 1;
         }
     }
+    window.addEventListener("keydown",(event)=>{
+        if (event.key.length == 1){
+            document.getElementById("buffer").innerText = event.key
+        setTimeout(()=>{
+            document.getElementById("buffer").innerText = '_'
+        },100)}
+        if (event.key == 'h') left()
+        else if (event.key == "j") down()
+        else if (event.key == "k") up()
+        else if (event.key == "l") right()
+    })
 }
 
 function updatedir(){
     var count = 0
     var navhtml = "";
-    navhtml = navhtml + `<parbar id=nav${count}>< ${current.pardir[0]}[d]</parbar>`;
+    navhtml = navhtml + `<parbar id=nav${count} class="nav">< ${current.pardir[0]}[d]</parbar>`;
     count ++;
-    navhtml = navhtml + `<selfbar id=nav${count}>- ${current.name[0]}[d] -</selfbar>`;
+    navhtml = navhtml + `<selfbar id=nav${count} class="nav">- ${current.name[0]}[d] -</selfbar>`;
     count ++;
     current.subdir.forEach(element => {
-        navhtml = navhtml + `<subbar id=nav${count}>${element[0]}[d] ></subbar>`;
+        navhtml = navhtml + `<subbar id=nav${count} class="nav">${element[0]}[d] ></subbar>`;
         count ++
     })
     current.files.forEach(element => {
-        navhtml = navhtml + `<subbar id=nav${count}>${element[0]}[-] ></subbar>`;
+        navhtml = navhtml + `<subbar id=nav${count} class="nav">${element[0]}[-] ></subbar>`;
         count ++
     })
     document.getElementById("outline").innerHTML=navhtml
@@ -95,14 +95,20 @@ function up(){
     if (displayingfile==1){
         scrollupfile()
     }
-    else if (cancount-- < 2){cancount=current.subdir.length+current.files.length+1}
+    else if (cancount-- < 2){
+        cancount=current.subdir.length+current.files.length+1
+    }
+    adjustoutline()
     highlightcount()
 }
 function down(){
     if (displayingfile==1){
         scrolldownfile()
     }
-    else if (cancount++ > current.subdir.length+current.files.length){cancount=1}
+    else if (cancount++ > current.subdir.length+current.files.length){
+        cancount=1
+    }
+    adjustoutline()
     highlightcount()
 }
 function left(){
@@ -129,6 +135,7 @@ function checkmacro(){
     str = str.replaceAll("MACRO-C-START","<c>")
     str = str.replaceAll("MACRO-C-END","</c>")
     str = str.replaceAll(" ","&nbsp;")
+    str = str.replaceAll("\n","<br>")
     document.getElementById("content").innerHTML = str
 }
 
@@ -157,7 +164,7 @@ function getcontent(path, component){
     request1.addEventListener("loadend",()=>{
         if(request1.status==200){
             var text = request1.responseText
-            document.getElementById(component).innerText = text
+            document.getElementById(component).innerHTML = text
             checkmacro()
             var btext = new Blob([text])
             document.getElementById("status").innerHTML = '[200]就绪.'
@@ -223,10 +230,23 @@ function focusnavforce(){
 }
 
 function scrolldownfile(){
-    document.getElementById("content").scrollTop = document.getElementById("content").scrollTop + document.getElementById("topbar").offsetHeight
+    document.getElementById("content").scrollTop = document.getElementById("content").scrollTop + document.getElementById("nav0").offsetHeight
 }
 function scrollupfile(){
-    document.getElementById("content").scrollTop = document.getElementById("content").scrollTop - document.getElementById("topbar").offsetHeight
+    document.getElementById("content").scrollTop = document.getElementById("content").scrollTop - document.getElementById("nav0").offsetHeight
+}
+
+function adjustoutline(){
+    var canheight = 0
+    for(var i = 0; i<cancount; i++){
+        canheight += document.getElementById(`nav${i}`).getBoundingClientRect().height
+    }
+    if(canheight < document.getElementById("outline").scrollTop + document.getElementById(`nav${cancount}`).getBoundingClientRect().height){
+        document.getElementById("outline").scrollTop = canheight - document.getElementById(`nav${cancount}`).getBoundingClientRect().height
+    }
+    if(canheight > document.getElementById("outline").scrollTop + document.getElementById("outline").offsetHeight-document.getElementById(`nav${cancount}`).offsetHeight){
+        document.getElementById("outline").scrollTop = canheight - document.getElementById("outline").offsetHeight + document.getElementById(`nav${cancount}`).getBoundingClientRect().height
+    }
 }
 
 // 邏輯:
