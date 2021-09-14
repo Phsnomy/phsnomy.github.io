@@ -31,7 +31,7 @@ window.onload = () => {
     document.getElementById("host").innerText=host
     document.getElementById("ping").style.color = "yellow"
     document.getElementById("ping").innerText="Testing..."
-    document.getElementById("status").innerText = "正在等待響應..."
+    document.getElementById("status").innerText = "正在等待响应..."
     var request = new XMLHttpRequest()
     request.addEventListener("loadend",()=>{
         if(request.status==200){
@@ -113,6 +113,7 @@ function down(){
     adjustoutline()
     highlightcount()
 }
+
 function left(){
     if (displayingfile==0) {changedir(current.pardir[1])}
     else {
@@ -167,11 +168,11 @@ function getcontent(path, component){
         if(request1.status==200){
             var text = request1.responseText
             document.getElementById(component).innerHTML = text
-            checkmacro()
             var btext = new Blob([text])
             document.getElementById("status").innerHTML = '[200]就绪.'
             document.getElementById("status").style.color = 'lawngreen'
             document.getElementById("size").innerHTML = ((btext.size/1024)+"").slice(0,4)
+            checkmacro()
         } else{
             document.getElementById("status").innerHTML = 
                 `<span style="color: red">[${request1.status}]错误.</span>`

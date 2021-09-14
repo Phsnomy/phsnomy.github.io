@@ -1,39 +1,37 @@
 <!DOCTYPE html>
 <head>
-    <title>- 終端 -</title>
-    <script src="js/arrange.js"></script>
+    <title>- 调查统计计划序列 -</title>
+    <script src="js/app.js"></script>
     <link rel='stylesheet' href="css/stylesheet.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css" integrity="sha384-zTROYFVGOfTw7JV7KUu8udsvW2fx4lWOsCEDqhBreBwlHI4ioVRtmIvEThzJHGET" crossorigin="anonymous">
+
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js" integrity="sha384-GxNFqL3r9uRJQhR+47eDxuPoNE7yLftQM8LcxzgS4HT73tp970WS/wV5p8UzCOmb" crossorigin="anonymous"></script>
+
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
 </head>
 <body>
-    <whitebox-block id="topbar" style="text-align: center;">
-        +-- 終端 [Host: <span id="host"></span> <span id="ping"></span>] --+
-    </whitebox-block>
-    <whitebox-block id="mainframe">
-        <div style="display: flex; flex-direction: row; height: 100%;">
-            <whitebox-block style="width: 20%; height: 100%;">
-                <div style="text-align: center;" id="nav-ind">Navigation</div>
-                <div class="whiteline" style="width: 100%; margin: 0; padding: 0;"></div>
-                <div id="outline" style="width: 100%; height: 100%;"></div>
-            </whitebox-block>
-            <whitebox-block style="width: 80%; height: 100%;">
-                <div style="text-align: center;" id="con-ind">Content</div>
-                <div class="whiteline" style="width: 100%; margin: 0; padding: 0;"></div>
-                <div id="content" style="width: 100%; height: 100%;"></div>
-            </whitebox-block>
-        </div>
-    </whitebox-block>
-    <whitebox-block id="bottombar">
-        <div id="bottombar-center">
-            <span id="ANS">[ANS]</span> |
-            Buffer: <span id="buffer">_</span> |
-            Size: <span id="size">----</span> KB |
-            Status: <span id="status">正在等待响应...</span>
-        </div>
-    </whitebox-block>
-    <div id="ANSA">
-        <span onclick="left()">[h]</span>
-        <span onclick="down()">[j]</span>
-        <span onclick="up()">[k]</span>
-        <span onclick="right()">[l]</span>
+    <div id="navigation">
+        <div id="up">
+        <div id="title">- 调查统计计划序列 -</div>
+        <div id="nav-title"></div>
+        <div style="font-size: smaller;">上层: <span id="nav-par"></span></div>
+        <div style="background-color: white; height: 1px;"></div>
+        <div style="font-size: smaller; text-align: center; padding-bottom: 10px;">本目录具备的子目录:</div>
+        </div><div id="subdir-list"></div><div id="down">
+        <div style="text-align: center; font-size: smaller;">[h] [j] [k] [l]</div>
+        <div style="background-color: white; height: 1px;"></div>
+        <div id="statusframe" style="margin: top;">
+            <div style="text-align: center">- 状态 -</div>
+            <div id="status" style="font-size: smaller;">
+                <div>值: <span id="statuscode" style="color: greenyellow;">200</span> KaTex: <span id="loaded" style="color: greenyellow;">loaded</span></div>
+                <div>体积: <span id="size""></span> KB</div>
+                <div>上次变更: <span id="time"></span></div>
+                <div style="text-align: center; padding-bottom: 5px;"> - Designed by phsnomy - </div>
+            </div>
+        </div></div>
+    </div>
+    <div id="mainframe">
     </div>
 </body>

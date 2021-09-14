@@ -1,15 +1,11 @@
-:root{
-    --border-width: 2px;
-}
-
-@font-face {
-    font-family: 'cwTeXMing';
-    src: url('/fonts/cwTeXMing.ttf.woff');
-}
-
 @font-face {
     font-family: 'Hack';
     src: url('/fonts/hack-regular.woff2');
+}
+
+@font-face {
+    font-family: "source-han-serif-sc";
+    src: url('/fonts/SourceHanSerifCN-Regular.woff2');
 }
 
 body{
@@ -17,82 +13,38 @@ body{
     background-color: black;
     color: white;
     border: var(--border-width) solid white;
-}
-
-whitebox-block{
-    border: var(--border-width) solid white;
-    display: block;
-    padding: 0;
-    margin: 0;
-}
-
-whitebox-flex{
-    border: var(--border-width) solid white;
     display: flex;
-    padding: 0;
-    margin: 0;
+    width: 96vw;
+    height: 96vh;
 }
 
-parbar{
-    display: block;
-    text-align: left;
+#navigation{
+    width: 20vw;
+    height: 96vh;
+    border: 1px white solid;
 }
 
-selfbar{
-    display: block;
+#mainframe{
+    width: 76vw;
+    height: 96vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    font-family: "Hack", "source-han-serif-sc";
+    margin-left: 1.5%;
+    padding-left: 1.5%;
+    padding-right: 1.5%;
+    border: 1px black solid;
+}
+
+#nav-title{
+    font-size: xx-large;
     text-align: center;
 }
 
-subbar{
-    display: block;
-    text-align: right;
-}
-
-c{
-    font-family: 'cwTeXMing';
-}
-
-#status{
-    text-align: justify;
-}
-#buffer{
-    text-align: justify;
-}
-
-#outline{
-    height: 100%;
-}
-
-#content, #outline{
+#subdir-list{
     overflow-y: scroll;
-    overflow-wrap: break-word;
 }
 
-::-webkit-scrollbar{
-    display: none;
-}
-
-.whiteline{
-    display: block;
-    background-color: white;
-    height: 2px;
-}
-
-#bottombar{
-    display: flex;
-    align-items: center;
-}
-
-#bottombar-center{
-    line-height: 100%;
-}
-
-#ANSA{
-    display: none;
-    position: absolute;
-    left: 20%;
-    top: 80%;
-}
-
-#nav{
+#title{
+    text-align: center;
 }

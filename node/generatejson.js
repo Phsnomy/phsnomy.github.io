@@ -1,37 +1,27 @@
 var fs = require("fs")
 
-function recread(str, par1, par2, name){
-    str = str + '/'
+
+function recread(selfpath, selfname){
+    selfpath = selfpath + '/'
     var dirinfo = {
-        "pardir":[],
-        "name": [],
-        "subdir": [],
-        "files": []
+        "subdirs": [],
+        "files": [],
+        "selfname": '',
+        "selfpath": ''
     }
-    dirinfo.pardir = [par1,par2]
-    dirinfo.name[1] = str
-    dirinfo.name[0] = name
-    fs.readdirSync(str).forEach((item, index)=>{
-        if(fs.lstatSync(str+item).isDirectory()==true){
-            dirinfo.subdir[dirinfo.subdir.length] = [item, str+item]
-            recread(str+item, dirinfo.name[0], dirinfo.name[1], item)
+    dirinfo.selfpath = selfpath
+    dirinfo.selfname = selfname
+    fs.readdirSync(selfpath).forEach((item, index)=>{
+        if(fs.lstatSync(selfpath+item).isDirectory()==true){
+            dirinfo.subdirs[dirinfo.subdirs.length] = recread(selfpath+item, item)
         }
-        else if(item=='index'||item=='dirinfo.json'){}
+        else if(item=='index'||item=="info.json"){}
         else{
-            dirinfo.files[dirinfo.files.length] = [item, str+item]
+            dirinfo.files[dirinfo.files.length] = item
         }
     })
-    fs.writeFileSync(str+'dirinfo.json', JSON.stringify(dirinfo))
+    return dirinfo
 }
-recread('public', "無", "public", "根目錄")
-/*
-fs.readdirSync('public').forEach((item, index)=>{
-    var item_n
-    if(fs.lstatSync("public/" + item).isDirectory()){
-        if (item=='archives') item_n="閣樓"
-        if (item=='guestbook') item_n='留言簿'
-        if (item=='comments') item_n='評論'
-        recread('public/'+item, "根目錄","public", item_n)
-    }
-})
-*/
+var result = recread('public', '根目录')
+result.date = (new Date()).toLocaleString().split(',')[0]
+fs.writeFileSync('public/info.json', JSON.stringify(result))
