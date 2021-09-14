@@ -1,4 +1,4 @@
-var host = "http://127.0.0.1:5500"
+var host = document.location.href
 var displayingFile = 0
 var candidateCount = 0
 var info
