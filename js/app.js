@@ -76,6 +76,7 @@ function get(path, func){
 }
 
 function up(){
+    flash('k')
     if (displayingFile == 1){ scrollUpFile() }
     else if (candidateCount-- < 1)
         {candidateCount = current.subdirs.length+current.files.length - 1}
@@ -84,6 +85,7 @@ function up(){
 }
 
 function down(){
+    flash('j')
     if (displayingFile == 1){ scrollDownFile() }
     else if (candidateCount++ > current.subdirs.length + current.files.length - 2)
         {candidateCount = 0}
@@ -91,6 +93,7 @@ function down(){
     adjustNav()
 }
 function left(){
+    flash('h')
     if (displayingFile==0){
         current = findParent(info, current)
         candidateCount = 0
@@ -99,6 +102,7 @@ function left(){
     else { refresh(); displayingFile = 0; focusNav() }
 }
 function right(){
+    flash('l')
     if (candidateCount >= current.subdirs.length){
         get(host+'/'+current.selfpath+current.files[candidateCount-current.subdirs.length], (text)=>{
             document.getElementById('mainframe').innerHTML = text
@@ -163,4 +167,13 @@ function adjustNav(){
     if(canHeight > document.getElementById("subdir-list").scrollTop + document.getElementById("subdir-list").offsetHeight-document.getElementById(`op${candidateCount}`).offsetHeight){
         document.getElementById("subdir-list").scrollTop = canHeight - document.getElementById("subdir-list").offsetHeight + document.getElementById(`op${candidateCount}`).getBoundingClientRect().height
     }
+}
+
+function flash(objID){
+    document.getElementById(objID).style.backgroundColor = 'white'
+    document.getElementById(objID).style.color = 'black'
+    setTimeout(()=>{
+        document.getElementById(objID).style.backgroundColor = 'black'
+        document.getElementById(objID).style.color = 'white'
+    },100)
 }

@@ -20,13 +20,13 @@ body{
 
 #navigation{
     width: 20vw;
-    height: 96vh;
+    height: 100%;
     border: 1px white solid;
 }
 
 #mainframe{
     width: 76vw;
-    height: 96vh;
+    height: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
     font-family: "Hack", "source-han-serif-sc";
